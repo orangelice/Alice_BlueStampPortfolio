@@ -53,6 +53,24 @@ For your first milestone, describe what your project is and how you plan to buil
 - Challenges you're facing and solving in your future milestones
 - What your plan is to complete your project
 
+# Starter Project Milestone
+
+## Retro Arcade Consol
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/C0KbTLukOyM?si=TB4xxQ1_YjlOvbIA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+### Description
+
+Before the main project, we had to work on a starter project. Mine was the retro arcade consol which had a tedious amount of soldering pins and wires. I started out by soldering on the buttons and displays, which wasn't the most difficult. The real challenge was getting Hershey's Kisses-shaped solder joints and waiting for the solder to heat up, which felt longer than the actual soldering process itself. I then had to solder all the wires on to connect the battery case to the board and finished by assembling the case. 
+
+### Challenges
+
+The project itself was quite straightforward, until I realized I had soldered on the 6 pin component on the wrong way. I then proceeded to spend the next half an hour struggling to desolder this component turning my board into a burnt mess. However, I did learn of many disoldering ways including the solder sucker, solder wick, and as a last resort, brute forcing it out. Eventually, by using numerous disoldering techniques, I was able to remove the component, which was beyond usable at that point. I replaced it with a new one and made sure that I wouldn't make the same mistake soldering it on again.
+
+### Next Step
+
+Once I finished the starter project, I would be able to move onto my main project, the Hexapod, where I would learn more skills and come across even more difficult challenges.
+
 # Schematics 
 Here's where you'll put images of your schematics. [Tinkercad](https://www.tinkercad.com/blog/official-guide-to-tinkercad-circuits) and [Fritzing](https://fritzing.org/learning/) are both great resoruces to create professional schematic diagrams, though BSE recommends Tinkercad becuase it can be done easily and for free in the browser. 
 
@@ -71,24 +89,6 @@ void loop() {
 
 }
 ```
-
-# Starter Project Milestone
-
-## Retro Arcade Consol
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/C0KbTLukOyM?si=TB4xxQ1_YjlOvbIA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-### Description
-
-Before the main project, we had to work on a starter project. Mine was the retro arcade consol which had a tedious amount of soldering pins and wires. I started out by soldering on the buttons and displays, which wasn't the most difficult. The real challenge was getting Hershey's Kisses-shaped solder joints and waiting for the solder to heat up, which felt longer than the actual soldering process itself. I then had to solder all the wires on to connect the battery case to the board and finished by assembling the case. 
-
-### Challenges
-
-The project itself was quite straightforward, until I realized I had soldered on the 6 pin component on the wrong way. I then proceeded to spend the next half an hour struggling to desolder this component turning my board into a burnt mess. However, I did learn of many disoldering ways including the solder sucker, solder wick, and as a last resort, brute forcing it out. Eventually, by using numerous disoldering techniques, I was able to remove the component, which was beyond usable at that point. I replaced it with a new one and made sure that I wouldn't make the same mistake soldering it on again.
-
-### Next Step
-
-Once I finished the starter project, I would be able to move onto my main project, the Hexapod, where I would learn more skills and come across even more difficult challenges.
 
 # Bill of Materials
 Here's where you'll list the parts in your project. To add more rows, just copy and paste the example rows below.
