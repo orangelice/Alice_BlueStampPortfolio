@@ -72,7 +72,7 @@ Once I finished the starter project, I would be able to move onto my main projec
 Here's where you'll put images of your schematics. [Tinkercad](https://www.tinkercad.com/blog/official-guide-to-tinkercad-circuits) and [Fritzing](https://fritzing.org/learning/) are both great resoruces to create professional schematic diagrams, though BSE recommends Tinkercad becuase it can be done easily and for free in the browser. 
 
 # Code
-Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize it to your project needs. 
+Github Repository to entire Hexabee Source Code : [HexabeeSourceCode](https://github.com/orangelice/HexabeeSourceCode.git)
 
 ### Arduino IDE Code
 
