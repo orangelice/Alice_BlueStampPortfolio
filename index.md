@@ -74,6 +74,7 @@ Here's where you'll put images of your schematics. [Tinkercad](https://www.tinke
 # Code
 Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize it to your project needs. 
 
+### Arduino IDE Code
 
 ```c++
 #define IR_REMOTE_ENABLE_TOTAL_NO_WARNINGS
@@ -144,6 +145,167 @@ void loop() {
   updateActiveScreen();
 }    
 
+```
+### FNHR OLED Display Header File
+```c++
+#ifndef FNHR_COMM_H
+#define FNHR_COMM_H
+
+// Prevent duplicate function definitions across multiple files
+#ifndef EXCLUDE_UNIVERSAL_IR_REMOTE
+  #define EXCLUDE_UNIVERSAL_IR_REMOTE
+#endif
+
+
+// screen modes
+enum ScreenMode {
+  SCREEN_OFF,
+  SCREEN_ULTRASONIC,
+  SCREEN_BATTERY,
+  SCREEN_DHT
+};
+
+extern ScreenMode currentScreen;
+extern bool UltrasonicScreen;
+
+void setupSensorsAndDisplay();
+void updateActiveScreen();
+void drawTempHumidityScreen();
+void drawUltrasonicScreen();
+
+#endif
+```
+### FNHR OLED Display Source File
+```c++
+#if defined(ARDUINO_AVR_MEGA2560)
+
+#define EXCLUDE_UNIVERSAL_IR_REMOTE
+
+#include "FNHRComm.h"
+#include "FNHRDisplay.h"
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+// define OLED screen
+ScreenMode currentScreen = SCREEN_OFF;
+bool UltrasonicScreen=false;
+
+extern DHT dht;
+
+extern Adafruit_SSD1306 display;
+
+
+unsigned long lastSensorRead = 0;
+const unsigned long SENSOR_INTERVAL = 2000; 
+
+bool hasReadTempThisSession = false;
+bool hasClearedOffScreen = false;
+
+float currentTemp = 0.0;
+float currentHumidity = 0.0;
+
+unsigned long lastUltrasonicRead = 0;
+const unsigned long ULTRASONIC_INTERVAL = 1000;
+
+void setupSensorsAndDisplay() {
+  dht.begin();
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+}
+
+void updateActiveScreen() {
+  switch (currentScreen) {
+    case SCREEN_ULTRASONIC:
+      drawUltrasonicScreen();
+
+      hasReadTempThisSession = false;
+      hasClearedOffScreen = false;
+      UltrasonicScreen=true;
+
+      break;
+
+    case SCREEN_DHT:
+      drawTempHumidityScreen();
+
+      UltrasonicScreen=false;
+      hasClearedOffScreen = false;
+
+      break;
+
+    case SCREEN_OFF:
+      if (!hasClearedOffScreen) {
+        display.clearDisplay();
+        display.display();
+
+        hasClearedOffScreen = true;
+        UltrasonicScreen=false;
+        hasReadTempThisSession = false;
+      }
+  }
+}
+
+void drawTempHumidityScreen() {
+  if (!hasReadTempThisSession) {
+    if (millis() - lastSensorRead >= SENSOR_INTERVAL) {
+      lastSensorRead = millis();
+      currentTemp = dht.readTemperature(true);
+      currentHumidity = dht.readHumidity();
+      hasReadTempThisSession = true; 
+    }
+
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    
+    display.setCursor(0, 0);
+    display.print("Temp: ");
+    display.print(currentTemp);
+    display.print(" F");
+
+    display.setCursor(0, 16);
+    display.print("Humidity: ");
+    display.print(currentHumidity);
+    display.print(" %");
+
+    display.display();
+  }
+}
+
+void drawUltrasonicScreen() {
+  if (millis() - lastUltrasonicRead < ULTRASONIC_INTERVAL) return;
+  lastUltrasonicRead = millis();
+
+  const int trigPin = A1;
+  const int echoPin = A0;
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+  noInterrupts();
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  interrupts();
+
+  float duration = pulseIn(echoPin, HIGH, 30000);
+  float distance = (duration * .0343) / 2;
+
+  display.clearDisplay();
+  display.setTextColor(SSD1306_WHITE);
+  display.setTextSize(3);
+  display.setCursor(0, 20);
+  if (distance > 300.0 || duration == 0) {
+    display.print("---");
+  } else {
+    display.print(distance, 1);
+    display.setTextSize(2);
+    display.print("cm");
+  }
+  display.display();
+}
+
+#endif
 ```
 
 # Bill of Materials
