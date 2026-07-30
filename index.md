@@ -1,11 +1,6 @@
-# Arudino Hexapod Robot
-Replace this text with a brief description (2-3 sentences) of your project. This description should draw the reader in and make them interested in what you've built. You can include what the biggest challenges, takeaways, and triumphs from completing the project were. As you complete your portfolio, remember your audience is less familiar than you are with all that your project entails!
+# Hexabee
 
-You should comment out all portions of your portfolio that you have not completed yet, as well as any instructions:
-```HTML 
-<!--- This is an HTML comment in Markdown -->
-<!--- Anything between these symbols will not render on the published site -->
-```
+The Hexabee is a modified version of the Freenove Hexapod Robot. It is a six legged robot designed to move and look similar to a bee. Each leg is made up of three servos which can be controlled through a computer program, an iphone app, or a physical remote control. The body of the Hexabee is a 3d printed bee modeled using CAD. It's capable of displaying the distance of any obstacles it detects through the ultrasonic sensor and the current humidity and temperature through the DHT11 sensor.
 
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
@@ -53,9 +48,14 @@ For your first milestone, describe what your project is and how you plan to buil
 - Challenges you're facing and solving in your future milestones
 - What your plan is to complete your project
 
+### Description
+By following the set of instructions that came with the Freenove Hexpod Robot, I was able to complete the assembly and calibration to the body, legs, and servos of the robot. I also set up Arduino IDE and the Processing software, as I have never used these before this camp. The kit already came with prewritten code for the Freenove Hexpod Robot library, so all I had to do was upload the example codes to my robot. The Processing software was to run the prewritten computer program that would be used to calibrate and control my robot through a USB cable or wifi module.  
+### Challenges
+### Next Step
+
 # Starter Project Milestone
 
-## Retro Arcade Consol
+## Retro Arcade Console
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/C0KbTLukOyM?si=TB4xxQ1_YjlOvbIA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
