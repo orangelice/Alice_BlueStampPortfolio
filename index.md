@@ -74,22 +74,79 @@ Here's where you'll put images of your schematics. [Tinkercad](https://www.tinke
 # Code
 Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize it to your project needs. 
 
+
 ```c++
+#define IR_REMOTE_ENABLE_TOTAL_NO_WARNINGS
+#include <Wire.h>
+#include <Adafruit_SSD1306.h>
+#include <Adafruit_GFX.h>
+#include <Arduino.h>
+#define IR_USE_AVR_TIMER3
+#include <IRremote.hpp>
+#include <FNHR.h>
+
+#include "DHT.h"
+#include "FNHRDisplay.h"
+#define DHTPIN 3 // Defining the data output pin to Arduino
+#define IR_RECEIVE_PIN 2
+#define DHTTYPE DHT11 // Specify the sensor type(DHT11 or DHT22)
+#define OLED_ADDR   0x3C // OLED display TWI address
+
+FNHR robot;
+DHT dht(DHTPIN, DHTTYPE); 
+
+Adafruit_SSD1306 display(-1);
+
+#ifndef ARDUINO_AVR_MEGA2560
+#error Wrong board. Please choose "Arduino/Genuino Mega or Mega 2560"
+#endif
+
+#if (SSD1306_LCDHEIGHT != 64)
+#error("Height incorrect, please fix Adafruit_SSD1306.h!");
+#endif  
+
 void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  Serial.println("Hello World!");
+  robot.Start(true);
+  Serial.begin(115200);
+  dht.begin();
+  IrReceiver.begin(IR_RECEIVE_PIN, ENABLE_LED_FEEDBACK);
+  setupSensorsAndDisplay();
+
+  // initialize and clear display
+  display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR);
+  display.setTextColor(SSD1306_WHITE);
+  Wire.begin();
+  Wire.setClock(400000L); 
+  display.clearDisplay();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
 
-}
+  if (IrReceiver.decode()) {
+      unsigned long command = IrReceiver.decodedIRData.command;
+      
+      // Update screen state based on button press
+      switch (command) {
+        case 0x0C: // HEX code for Button 1
+          currentScreen = SCREEN_ULTRASONIC;
+          break;
+        case 0x18: // HEX code for Button 2
+          currentScreen = SCREEN_DHT;
+          break;
+        case 0x45: // HEX code for Power Button
+          currentScreen = SCREEN_OFF;
+          break;
+      }
+    
+    IrReceiver.resume();
+  }
+  robot.Update();
+  updateActiveScreen();
+}    
+
 ```
 
 # Bill of Materials
-Here's where you'll list the parts in your project. To add more rows, just copy and paste the example rows below.
-Don't forget to place the link of where to buy each component inside the quotation marks in the corresponding row after href =. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize this to your project needs. 
 
 | **Part** | **Note** | **Price** | **Link** |
 |:--:|:--:|:--:|:--:|
@@ -97,11 +154,4 @@ Don't forget to place the link of where to buy each component inside the quotati
 | Ultrasonic Sensor | Detecting distance | $3.36 USD per piece | <a href="https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/](https://www.amazon.com/Ultrasonic-2cm-450cm-Interface-Compatible-Raspberry/dp/B0GL8NJCVT/ref=sr_1_3_sspa?crid=NKKZC1Q62JB6&dib=eyJ2IjoiMSJ9.eqTALHM8pOp6RiYX3iy9K-MvzhafEKee88ft1CTWtWOb4LNq68VS1E7_Y6KdP5jwLhbT5wbWuV636T5pFtR5WnSmJ9RZ5lab8hYE5ESM_X30woLaNFeb6_2HSssmaNVmazfdoNouSdg45mmLOTdgVgNPW5ybADfFxF3daJE62J-F9Ztg4-yty62xIyZaGvQHWxtUoHFcd4RmtXFFip4X38zXw96ORkrjkQVUWe6vLUI.3-YSmvws2EEVWfhN7RcH0wtvYihLUwrme8vOsDFBKXY&dib_tag=se&keywords=Ultrasonic+Sensors+hc+sr04&qid=1785436739&sprefix=ultrasonic+sensors+hc+sr04%2Caps%2C181&sr=8-3-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&psc=1"> Link </a> |
 | DHT11 3 Pin Sensor | Collecting humidity and temperature data | $3.00 USD per piece | <a href="https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/](https://www.amazon.com/BOJACK-Temperature-Humidity-Digital-Raspberry/dp/B09TKTZMSL/ref=sr_1_6_sspa?dib=eyJ2IjoiMSJ9.SR80wzYQct2PFw8GneEJJfGLB7gbkBRmRZ6MBkibfs3C02lpr2NzxHovDXm15C3vQ7P7OCiRdsZz4LFAhoiYjqpA3c9Nh1RV1XZRFKEI0ARDBYpqSAbnO1w2sjIiY0Y6X97-l8xQeF_ejL71uS-rCSJndWYZNrN9eYtKPow7xP6zgraaPwaJfWKNqZwZvFwyRFteU9Mn0SjD6TXdygEeBEP-Y3O9VF0pjyA_n94-xyI.i8bbrF9i0zvFxYftYQNZdmiOKiWjloKaQch0D8aAAZA&dib_tag=se&keywords=dht11%2Bsensor&qid=1785436791&sr=8-6-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&th=1"> Link </a> |
 | DHT11 4 Pin Sensor | Collecting humidity and temperature data | $1.99 USD per piece | <a href="https://www.amazon.com/Arduino-A000066-ARDUINO-UNO-R3/dp/B008GRTSV6/](https://www.amazon.com/JESSINIE-DHT11-Digital-Temperature-Sensor/dp/B0BLG7R99R/ref=sr_1_7?crid=17UNSCYEEYMWD&dib=eyJ2IjoiMSJ9.rUhI0DglR1CncDz6S55DQKU7fqk4qTK4v_PWk62IUgmH0loCxbA55W9WI9-ZFfMkHO-ILWipurnqthPA7fYkjZ4inYMPrO6nCAu5AYNDIzo8qzQZbbR93rldxLX-aVTVxFP_tFT2oan_ScJpQo6nC_-LwphzlcY50lvuV9A5MG2mv_2jIUqZkr8djjO3cc3DvclJHGqmewo5bJJ-72Ro_4Aij3dsR7IVxMFfbMq6-Sg.5ifND2UMcG1FCtxEvhjp4mzY82GmHRDqnsFIlYBvx7M&dib_tag=se&keywords=dht11+4+pin+sensor&qid=1785437259&sprefix=dht11+4+pin+senso%2Caps%2C196&sr=8-7"> Link </a> |
-
-# Other Resources/Examples
-One of the best parts about Github is that you can view how other people set up their own work. Here are some past BSE portfolios that are awesome examples. You can view how they set up their portfolio, and you can view their index.md files to understand how they implemented different portfolio components.
-- [Example 1](https://trashytuber.github.io/YimingJiaBlueStamp/)
-- [Example 2](https://sviatil0.github.io/Sviatoslav_BSE/)
-- [Example 3](https://arneshkumar.github.io/arneshbluestamp/)
-
-To watch the BSE tutorial on how to create a portfolio, click here.
+| 128x64 I2C OLED Display Module | Small screen used to display ultrasonic sensor and DHT11 sensor | $15.99 USD | <a href="amazon.com/Hosyond-inches-Display-SSD1309-Arduino/dp/B0G2RFLG1L/ref=sr_1_16?crid=1QK6QTJ7NNG4J&dib=eyJ2IjoiMSJ9.wmW83Dmxfyl5RxdfjV1gHhrQDxOQEy9Lug9kAuw9ga46H8Tq8_7f86glMLI09wU_MYoGCRJqDgI5gJEdC8fP9NP5d9igh5UQybORTbqPjTDyYZ4tyrjOYcZ8iPmFEsU5b2C6VLENHtvfgNNIl-KY_qE36cSSQ47_pO7QiMCHY3kX6VGsGz2Dr8l95xZ4cZBVnZDHKw_56SzjAKRDhCpJyjwIje7R_SLxMIOr9r10LqA._ZYLdrnNCDxEpPCu6QxCYQd1G_Fpp7kKCu1FxV7sTbc&dib_tag=se&keywords=OLED+module&qid=1785437409&sprefix=oled+module%2Caps%2C231&sr=8-16"> Link </a> |
