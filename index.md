@@ -53,7 +53,7 @@ I plan on CADing another battery case to hold my new nickel metal hydride batter
 
 Before the main project, we had to work on a starter project. Mine was the retro arcade consol which had a tedious amount of soldering pins and wires. I started out by soldering on the buttons and displays, which wasn't the most difficult. The real challenge was getting Hershey's Kisses-shaped solder joints and waiting for the solder to heat up, which felt longer than the actual soldering process itself. I then had to solder all the wires on to connect the battery case to the board and finished by assembling the case. 
 
-![Starter Project Image](StarterProject.heic)
+![Starter Project Image](StarterProject.jpg)
 
 ### Challenges
 
