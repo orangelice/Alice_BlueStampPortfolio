@@ -12,11 +12,6 @@ The Hexabee is a modified version of the Freenove Hexapod Robot. It is a six leg
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/IYq5nveivSs?si=xY_JI1r71WWYH0K6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-For your final milestone, explain the outcome of your project. Key details to include are:
-- What you've accomplished since your previous milestone
-- What your biggest challenges and triumphs were at BSE
-- A summary of key topics you learned about
-- What you hope to learn in the future after everything you've learned at BSE
 ### Description
 ### Challenges
 ### Next Step
@@ -26,11 +21,6 @@ For your final milestone, explain the outcome of your project. Key details to in
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/AfRUrXuUrDk?si=9Ig_jzEa9r7GMSKy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-For your second milestone, explain what you've worked on since your previous milestone. You can highlight:
-- Technical details of what you've accomplished and how they contribute to the final goal
-- What has been surprising about the project so far
-- Previous challenges you faced that you overcame
-- What needs to be completed before your final milestone
 ### Description
 ### Challenges
 ### Next Step
@@ -39,16 +29,12 @@ For your second milestone, explain what you've worked on since your previous mil
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Yec_EKpSPK0?si=HAmwGK7f6RO3Eiup" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-For your first milestone, describe what your project is and how you plan to build it. You can include:
-- An explanation about the different components of your project and how they will all integrate together
-- Technical progress you've made so far
-- Challenges you're facing and solving in your future milestones
-- What your plan is to complete your project
-
 ### Description
-By following the set of instructions that came with the Freenove Hexpod Robot, I was able to complete the assembly and calibration for the body, legs, and servos of the robot and set up the Arduino IDE and the Processing software. The kit already came with prewritten code for the Freenove Hexpod Robot library, so all I had to do was upload the example codes to my robot. The Processing software was used to run the prewritten computer program that would be used to calibrate and control my robot through a USB cable or Wi-Fi module. I also set up the physical remote control that is connected to the hexapod through a wireless module. 
+By following the set of instructions that came with the Freenove Hexapod Robot, I was able to complete the assembly and calibration for the body, legs, and servos of the robot and set up the Arduino IDE and the Processing software. Before assembling everything, I had to remove the battery case, as the original kit required a lithium battery, which apparently  are more prone to explode, so we replaced it with nickel metal hydride batteries. To connect the new battery, I had to solder in screw terminals to fasten more wires. The kit already came with prewritten code for the Freenove Hexapod Robot library, so all I had to do was upload the example codes to my robot. The Processing software was used to run the prewritten computer program that would be used to calibrate and control my robot through a USB cable or Wi-Fi module. I also set up the physical remote control that is connected to the hexapod through a wireless module. 
 ### Challenges
+I faced a series of challenges, including desoldering the battery case, calibrating the servos, and overall, just the tedious process of assembling the hexapod. The first challenge I was met with was desoldering the battery case, which had to be done before assembling the rest of the robot. With the help of an instructor, I was able to rotate between soldering each of the ix pin and trying to wiggle them out one at a time.  
 ### Next Step
+I plan on CADing another battery case to hold my new nickel metal hydride battery because I currently have no where to house it. To make it fun, I plan on making it look like some sort of cute insect like a bee. I also plan on adding more electronics for it to be able to interact more with its environment. 
 
 # Starter Project Milestone
 
