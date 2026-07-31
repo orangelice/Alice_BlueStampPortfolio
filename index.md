@@ -31,8 +31,15 @@ The Hexabee is a modified version of the Freenove Hexapod Robot. It is a six leg
 
 ### Description
 By following the set of instructions that came with the Freenove Hexapod Robot, I was able to complete the assembly and calibration for the body, legs, and servos of the robot and set up the Arduino IDE and the Processing software. Before assembling everything, I had to remove the battery case, as the original kit required a lithium battery, which apparently  are more prone to explode, so we replaced it with nickel metal hydride batteries. To connect the new battery, I had to solder in screw terminals to fasten more wires. The kit already came with prewritten code for the Freenove Hexapod Robot library, so all I had to do was upload the example codes to my robot. The Processing software was used to run the prewritten computer program that would be used to calibrate and control my robot through a USB cable or Wi-Fi module. I also set up the physical remote control that is connected to the hexapod through a wireless module. 
+
+<video width="640" height="360" controls>
+  <source src="HexapodVid.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ### Challenges
 I faced a series of challenges, including desoldering the battery case, calibrating the servos, and overall, just the tedious process of assembling the hexapod. The first challenge I was met with was desoldering the battery case, which had to be done before assembling the rest of the robot. With the help of an instructor, I was able to rotate between soldering each of the ix pin and trying to wiggle them out one at a time.  
+
 ### Next Step
 I plan on CADing another battery case to hold my new nickel metal hydride battery because I currently have no where to house it. To make it fun, I plan on making it look like some sort of cute insect like a bee. I also plan on adding more electronics for it to be able to interact more with its environment. 
 
@@ -45,6 +52,8 @@ I plan on CADing another battery case to hold my new nickel metal hydride batter
 ### Description
 
 Before the main project, we had to work on a starter project. Mine was the retro arcade consol which had a tedious amount of soldering pins and wires. I started out by soldering on the buttons and displays, which wasn't the most difficult. The real challenge was getting Hershey's Kisses-shaped solder joints and waiting for the solder to heat up, which felt longer than the actual soldering process itself. I then had to solder all the wires on to connect the battery case to the board and finished by assembling the case. 
+
+![Starter Project Image](StarterProject.heic)
 
 ### Challenges
 
