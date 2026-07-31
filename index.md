@@ -144,7 +144,280 @@ void loop() {
   robot.Update();
   updateActiveScreen();
 }    
+```
+### Modified Crawl Function in FNHRBasic.cpp
+```c++
+void RobotAction::Crawl(float x, float y, float angle)
+{
+  // Serial.println("Crawl");
+  const int trigPin = A1;
+  const int echoPin = A0;
 
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+  float duration, distance, stopDistanceCm=15.0;
+
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration*.0343)/2;
+  Serial.print("Distance: ");
+  Serial.println(distance);
+
+  // static unsigned long lastOledUpdate = millis();
+  
+  if (distance > stopDistanceCm) {
+    ActionState();
+    if (legsState != LegsState::CrawlState)
+      InitialState();
+    if (mode != Mode::Active)
+      ActiveMode();
+
+    float length = sqrt(pow(x, 2) + pow(y, 2));
+    if (length > crawlLength)
+    {
+      x = x * crawlLength / length;
+      y = y * crawlLength / length;
+    }
+    angle = constrain(angle, -turnAngle, turnAngle);
+
+    x /= crawlSteps;
+    y /= crawlSteps;
+    angle /= crawlSteps;
+
+    RobotLegsPoints points1;
+    robot.GetPointsNow(points1);
+
+    RobotLegsPoints points2 = points1;
+    GetCrawlPoints(points2, Point(-x / 2, -y / 2, 0));
+    GetTurnPoints(points2, -angle / 2);
+
+    RobotLegsPoints points3 = points1;
+    GetCrawlPoints(points3, Point(-x, -y, 0));
+    GetTurnPoints(points3, -angle);
+
+    RobotLegsPoints points4 = robot.bootPoints;
+    GetCrawlPoints(points4, Point(x  * (crawlSteps - 1) / 2 / 2, y  * (crawlSteps - 1) / 2 / 2, -bodyLift + legLift));
+    GetTurnPoints(points4, angle  * (crawlSteps - 1) / 2 / 2);
+
+    RobotLegsPoints points5 = robot.bootPoints;
+    GetCrawlPoints(points5, Point(x * (crawlSteps - 1) / 2, y  * (crawlSteps - 1) / 2, -bodyLift));
+    GetTurnPoints(points5, angle  * (crawlSteps - 1) / 2);
+
+    legMoveIndex < crawlSteps ? legMoveIndex++ : legMoveIndex = 1;
+
+    switch (crawlSteps)
+    {
+    case 2:
+      switch (legMoveIndex)
+      {
+      case 1:
+        points2.leg1 = points4.leg1;
+        points3.leg1 = points5.leg1;
+        points2.leg3 = points4.leg3;
+        points3.leg3 = points5.leg3;
+        points2.leg5 = points4.leg5;
+        points3.leg5 = points5.leg5;
+        if (CheckCrawlPoints(points2))
+        {
+          if (!CheckCrawlPoints(points3))
+          {
+            points3 = points2;
+            points3.leg1.z = points1.leg1.z;
+            points3.leg3.z = points1.leg3.z;
+            points3.leg5.z = points1.leg5.z;
+          }
+          LegsMoveTo(points2, 1, legLiftSpeed);
+          LegsMoveTo(points3, 1, legLiftSpeed);
+        }
+        break;
+      case 2:
+        points2.leg2 = points4.leg2;
+        points3.leg2 = points5.leg2;
+        points2.leg4 = points4.leg4;
+        points3.leg4 = points5.leg4;
+        points2.leg6 = points4.leg6;
+        points3.leg6 = points5.leg6;
+        if (CheckCrawlPoints(points2))
+        {
+          if (!CheckCrawlPoints(points3))
+          {
+            points3 = points2;
+            points3.leg2.z = points1.leg2.z;
+            points3.leg4.z = points1.leg4.z;
+            points3.leg6.z = points1.leg6.z;
+          }
+          LegsMoveTo(points2, 2, legLiftSpeed);
+          LegsMoveTo(points3, 2, legLiftSpeed);
+        }
+        break;
+      }
+      break;
+    case 4:
+      switch (legMoveIndex)
+      {
+      case 1:
+        points2.leg1 = points4.leg1;
+        points3.leg1 = points5.leg1;
+        points2.leg6 = points4.leg6;
+        points3.leg6 = points5.leg6;
+        if (CheckCrawlPoints(points2))
+        {
+          if (!CheckCrawlPoints(points3))
+          {
+            points3 = points2;
+            points3.leg1.z = points1.leg1.z;
+            points3.leg6.z = points1.leg6.z;
+          }
+          LegsMoveTo(points2, 1, legLiftSpeed);
+          LegsMoveTo(points3, 1, legLiftSpeed);
+        }
+        break;
+      case 2:
+        points2.leg5 = points4.leg5;
+        points3.leg5 = points5.leg5;
+        if (CheckCrawlPoints(points2))
+        {
+          if (!CheckCrawlPoints(points3))
+          {
+            points3 = points2;
+            points3.leg5.z = points1.leg5.z;
+          }
+          LegsMoveTo(points2, 5, legLiftSpeed);
+          LegsMoveTo(points3, 5, legLiftSpeed);
+        }
+        break;
+      case 3:
+        points2.leg3 = points4.leg3;
+        points3.leg3 = points5.leg3;
+        points2.leg4 = points4.leg4;
+        points3.leg4 = points5.leg4;
+        if (CheckCrawlPoints(points2))
+        {
+          if (!CheckCrawlPoints(points3))
+          {
+            points3 = points2;
+            points3.leg3.z = points1.leg3.z;
+            points3.leg4.z = points1.leg4.z;
+          }
+          LegsMoveTo(points2, 3, legLiftSpeed);
+          LegsMoveTo(points3, 3, legLiftSpeed);
+        }
+        break;
+      case 4:
+        points2.leg2 = points4.leg2;
+        points3.leg2 = points5.leg2;
+        if (CheckCrawlPoints(points2))
+        {
+          if (!CheckCrawlPoints(points3))
+          {
+            points3 = points2;
+            points3.leg2.z = points1.leg2.z;
+          }
+          LegsMoveTo(points2, 2, legLiftSpeed);
+          LegsMoveTo(points3, 2, legLiftSpeed);
+        }
+        break;
+      }
+      break;
+    case 6:
+      switch (legMoveIndex)
+      {
+      case 1:
+        points2.leg1 = points4.leg1;
+        points3.leg1 = points5.leg1;
+        if (CheckCrawlPoints(points2))
+        {
+          if (!CheckCrawlPoints(points3))
+          {
+            points3 = points2;
+            points3.leg1.z = points1.leg1.z;
+          }
+          LegsMoveTo(points2, 1, legLiftSpeed);
+          LegsMoveTo(points3, 1, legLiftSpeed);
+        }
+        break;
+      case 2:
+        points2.leg5 = points4.leg5;
+        points3.leg5 = points5.leg5;
+        if (CheckCrawlPoints(points2))
+        {
+          if (!CheckCrawlPoints(points3))
+          {
+            points3 = points2;
+            points3.leg5.z = points1.leg5.z;
+          }
+          LegsMoveTo(points2, 5, legLiftSpeed);
+          LegsMoveTo(points3, 5, legLiftSpeed);
+        }
+        break;
+      case 3:
+        points2.leg3 = points4.leg3;
+        points3.leg3 = points5.leg3;
+        if (CheckCrawlPoints(points2))
+        {
+          if (!CheckCrawlPoints(points3))
+          {
+            points3 = points2;
+            points3.leg3.z = points1.leg3.z;
+          }
+          LegsMoveTo(points2, 3, legLiftSpeed);
+          LegsMoveTo(points3, 3, legLiftSpeed);
+        }
+        break;
+      case 4:
+        points2.leg4 = points4.leg4;
+        points3.leg4 = points5.leg4;
+        if (CheckCrawlPoints(points2))
+        {
+          if (!CheckCrawlPoints(points3))
+          {
+            points3 = points2;
+            points3.leg4.z = points1.leg4.z;
+          }
+          LegsMoveTo(points2, 4, legLiftSpeed);
+          LegsMoveTo(points3, 4, legLiftSpeed);
+        }
+        break;
+      case 5:
+        points2.leg2 = points4.leg2;
+        points3.leg2 = points5.leg2;
+        if (CheckCrawlPoints(points2))
+        {
+          if (!CheckCrawlPoints(points3))
+          {
+            points3 = points2;
+            points3.leg2.z = points1.leg2.z;
+          }
+          LegsMoveTo(points2, 2, legLiftSpeed);
+          LegsMoveTo(points3, 2, legLiftSpeed);
+        }
+        break;
+      case 6:
+        points2.leg6 = points4.leg6;
+        points3.leg6 = points5.leg6;
+        if (CheckCrawlPoints(points2))
+        {
+          if (!CheckCrawlPoints(points3))
+          {
+            points3 = points2;
+            points3.leg6.z = points1.leg6.z;
+          }
+          LegsMoveTo(points2, 6, legLiftSpeed);
+          LegsMoveTo(points3, 6, legLiftSpeed);
+        }
+        break;
+      }
+      break;
+    }
+    legsState = LegsState::CrawlState;
+  }
+}
 ```
 ### FNHR OLED Display Header File
 ```c++
