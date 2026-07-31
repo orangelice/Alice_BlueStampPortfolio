@@ -22,6 +22,7 @@ The Hexabee is a modified version of the Freenove Hexapod Robot. It is a six leg
 <iframe width="560" height="315" src="https://www.youtube.com/embed/AfRUrXuUrDk?si=9Ig_jzEa9r7GMSKy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ### Description
+I started CADing the Hexapod Base so I could then accurately CAD the Hexapod battery case to accurately fit onto the hexapod. I used calipers to measure 
 ### Challenges
 ### Next Step
 
